@@ -1,4 +1,6 @@
 import CartRow from "@/component/Cart/CartRow"
+import { BuyButtons } from "@/component/Cart/product/BuyButtons"
+import { TotalPrice } from "@/component/Cart/product/TotalPrice"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { dummyProducts } from "@/dummy/productDummy"
@@ -10,7 +12,7 @@ const CartPage = () => {
 
   const [cartProduct, setCartProduct] = useState(dummyProducts);
   const [headChecked, setHeadChecked] = useState(false);
-  const [productChecked, setProductChecked] = useState<boolean[]>();
+  const [productChecked, setProductChecked] = useState<boolean[]>([]);
 
   useEffect(() => {
     const len = cartProduct.length
@@ -19,8 +21,26 @@ const CartPage = () => {
   }, [cartProduct])
 
   const handleAllClick = () => {
+    setProductChecked(productChecked?.map((x) => {
+      x = !headChecked;
+      return x
+    }));
     setHeadChecked(!headChecked);
-    setProductChecked(productChecked?.map((_) => headChecked));
+  }
+
+  const handleDelete = (id: number) => {
+    // product id 날려달라고 요청보냄
+    const deletedProduct = cartProduct.filter((x) => x.id != id);
+    setCartProduct(deletedProduct)
+    console.log(id);
+  }
+
+  const handleCheckbox = (id: number) => {
+    const idx = cartProduct.findIndex((x) => x.id == id);
+
+    const tmpProductChecked = [...productChecked]
+    tmpProductChecked[idx] = !tmpProductChecked[idx]
+    setProductChecked(tmpProductChecked)
   }
 
   return (
@@ -32,18 +52,22 @@ const CartPage = () => {
             <TableHead className="w-2/4 text-center">상품명</TableHead>
             <TableHead className="text-center w-1/4">가격</TableHead>
             <TableHead className="w-1/4 text-center">수량</TableHead>
-            <TableHead className="text-center w-fit">삭제</TableHead>
+            <TableHead className="text-center w-fit whitespace-nowrap">삭제</TableHead>
             <TableHead><Checkbox className="mr-5" onClick={handleAllClick} checked={headChecked} /></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {cartProduct.map((x) =>
-            <CartRow product={x} key={x.id} setCartProduct={setCartProduct} cartProduct={cartProduct} />
+          {cartProduct.map((x, idx) =>
+            <CartRow product={x} key={x.id} isChecked={productChecked[idx]} handleDelete={handleDelete} handleCheckbox={handleCheckbox} />
           )}
         </TableBody>
       </Table>
-      <div>Total Price</div>
-      <div>Buttons</div>
+      <TotalPrice
+        productTypes={cartProduct.length}
+        totalQuantity={cartProduct.reduce((prev, curr) => prev + curr.quantity, 0)}
+        totalPrice={cartProduct.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}
+      />
+      <BuyButtons />
     </div>
   )
 }

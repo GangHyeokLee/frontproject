@@ -8,6 +8,7 @@ import SignUpSeller from "./pages/SignUpSeller"
 import ProductList from "./pages/ProductList"
 import ProductDetail from "./pages/ProductDetail"
 import AddProduct from "./pages/AddProduct"
+import CartPage from "./pages/CartPage"
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/add" element={<AddProduct />} />
           <Route path="/edit/:id" element={<AddProduct />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
       </Routes>
     </>

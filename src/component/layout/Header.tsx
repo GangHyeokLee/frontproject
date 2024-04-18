@@ -5,6 +5,7 @@ import NavLogin from "./NavLogin"
 import NavRegister from "./NavRegister"
 import Title from "./Title"
 import TopNav from "./TopNav"
+import { NavCart } from "./NavCart"
 
 const Header = () => {
   return (
@@ -16,11 +17,13 @@ const Header = () => {
       <div className="flex">
         {localStorage.getItem('AccessToken') ? (
           <>
+            <NavCart />
             <NavLogout />
             <NavMyPage />
           </>
         ) : (
           <>
+            <NavCart />
             <NavLogin />
             <NavRegister />
           </>
