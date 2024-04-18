@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Product, dummyProducts } from "@/dummy/productDummy";
+import { dummyProducts } from "@/dummy/productDummy";
+import { Product } from "@/type/product.type";
 import { ChevronLeft, Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
@@ -25,12 +26,12 @@ const ProductDetail = () => {
       </Button>
       <div className="w-full flex justify-between mb-20">
         <div className="mr-28 w-fit">
-          <img src={product?.productImage} className="w-96 h-96" />
+          <img src={product?.imageUrl} className="w-96 h-96" />
         </div>
         <div className="flex flex-col justify-start flex-grow border-t-4 border-t-black pt-8">
-          <div className="text-3xl font-extrabold pb-10">{product?.productName}</div>
+          <div className="text-3xl font-extrabold pb-10">{product?.name}</div>
           <div className="flex items-end mb-8">
-            <p className="text-2xl font-bold">{product?.productPrice.toLocaleString()}</p>
+            <p className="text-2xl font-bold">{product?.price.toLocaleString()}</p>
             <p>&nbsp;원</p></div>
           <div className="flex justify-start text-sm">
             <p className="w-48">배송정보</p>
@@ -58,7 +59,7 @@ const ProductDetail = () => {
               <p className="text-xl">{quantity}</p>
               <Button onClick={() => { setQuantity((quantity - 1) > 0 ? (quantity - 1) : 1) }} className="bg-white text-black border-2 ml-5 hover:bg-white" size="icon" ><Minus className="h-4-w-4" /></Button>
             </span>
-            <p>{product ? (quantity * product.productPrice).toLocaleString() : 0} 원</p>
+            <p>{product ? (quantity * product.price).toLocaleString() : 0} 원</p>
           </div>
 
           <div className="mt-12 flex justify-between">
@@ -67,7 +68,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <p>{product?.productDescription}</p>
+      <p>{product?.description}</p>
     </div>
   )
 }
