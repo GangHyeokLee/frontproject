@@ -7,6 +7,7 @@ import SignUpNormal from "./pages/SignUpNormal"
 import SignUpSeller from "./pages/SignUpSeller"
 import ProductList from "./pages/ProductList"
 import ProductDetail from "./pages/ProductDetail"
+import AddProduct from "./pages/AddProduct"
 
 function App() {
 
@@ -21,6 +22,8 @@ function App() {
           <Route path="/register/seller" element={<SignUpSeller />} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/add" element={<AddProduct />} />
+          <Route path="/edit/:id" element={<AddProduct />} />
         </Route>
       </Routes>
     </>
