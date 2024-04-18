@@ -5,6 +5,8 @@ import LoginPage from "./pages/LoginPage"
 import SignUpSelectPage from "./pages/SignUpSelectPage"
 import SignUpNormal from "./pages/SignUpNormal"
 import SignUpSeller from "./pages/SignUpSeller"
+import ProductList from "./pages/ProductList"
+import ProductDetail from "./pages/ProductDetail"
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
           <Route path="/register" element={<SignUpSelectPage />} />
           <Route path="/register/user" element={<SignUpNormal />} />
           <Route path="/register/seller" element={<SignUpSeller />} />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
         </Route>
       </Routes>
     </>
