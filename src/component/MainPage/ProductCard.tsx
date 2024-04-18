@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Product } from './../../dummy/productDummy';
+import { Product } from "../../type/product.type";
 
-const ProductCard: React.FC<{ product: Product }> = ({
-  product
-}) => {
+interface ProductCardProps { product: Product }
+
+const ProductCard = ({product}:ProductCardProps) => {
   const navigate = useNavigate();
   const [productImg, setProductImg] = useState('');
 
@@ -12,8 +12,8 @@ const ProductCard: React.FC<{ product: Product }> = ({
     const fetchPostImg = async () => {
       // const response = await fetchImgFromFirebase(imgUrl);
       // setPostImg(response);
-      setProductImg(product.productImage)
-    };
+      setProductImg(product.imageUrl)
+    };    
     fetchPostImg();
   }, [product]);
 
@@ -31,12 +31,12 @@ const ProductCard: React.FC<{ product: Product }> = ({
       </div>
       <div className="flex flex-row w-full justify-start text-xs h-6">
         <div
-          className={`text-white px-3 py-1 rounded-full h-fit w-fit text-center mr-5 bg-${product.productCategory}`}
+          className={`text-white px-3 py-1 rounded-full h-fit w-fit text-center mr-5 bg-${product.category}`}
         >
-          {product.productCategory}
+          {product.category}
         </div>
       </div>
-      <div>{product.productName}</div>
+      <div>{product.name}</div>
     </div>
   );
 };
