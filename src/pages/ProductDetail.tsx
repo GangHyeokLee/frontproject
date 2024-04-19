@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { dummyProducts } from "@/dummy/productDummy";
-import { Product } from "@/type/product.type";
+import { Product } from "@/types/product.type";
 import { ChevronLeft, Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"

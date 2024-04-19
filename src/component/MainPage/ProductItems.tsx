@@ -1,7 +1,7 @@
 
 import React from 'react'
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
-import { Product } from "../../type/product.type";
+import { Product } from "../../types/product.type";
 import { ProductCard } from "./product/card/ProductCard";
 
 

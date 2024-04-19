@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { TableCell, TableRow } from "@/components/ui/table"
-import { Product } from '@/type/product.type';
+import { Product } from '@/types/product.type';
 import { useQuantity } from "@/hooks/useQuantity"
 import { QuantityButton } from "../ProductDetail/QuantityButton"
 

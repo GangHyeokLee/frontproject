@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Product } from "../../type/product.type";
+import { Product } from "../../types/product.type";
 
 interface ProductCardProps { product: Product }
 
-const ProductCard = ({product}:ProductCardProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const navigate = useNavigate();
   const [productImg, setProductImg] = useState('');
 
@@ -13,7 +13,7 @@ const ProductCard = ({product}:ProductCardProps) => {
       // const response = await fetchImgFromFirebase(imgUrl);
       // setPostImg(response);
       setProductImg(product.imageUrl)
-    };    
+    };
     fetchPostImg();
   }, [product]);
 

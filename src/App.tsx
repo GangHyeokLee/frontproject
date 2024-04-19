@@ -9,6 +9,8 @@ import ProductList from "./pages/ProductList"
 import ProductDetail from "./pages/ProductDetail"
 import AddProduct from "./pages/AddProduct"
 import CartPage from "./pages/CartPage"
+import { PaymentPage } from "./pages/PaymentPage"
+import { ReceiptPage } from "./pages/ReceiptPage"
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
           <Route path="/add" element={<AddProduct />} />
           <Route path="/edit/:id" element={<AddProduct />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/receipt/:id" element={<ReceiptPage />} />
         </Route>
       </Routes>
     </>

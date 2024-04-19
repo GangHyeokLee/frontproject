@@ -45,7 +45,7 @@ const CartPage = () => {
 
   return (
     <div className="w-full p-10">
-      <div className="text-6xl font-bold border-b-4 items-start pb-6">Shopping Cart</div>
+      <div className="text-6xl font-bold border-b-4 border-b-gray-500 items-start pb-6">Shopping Cart</div>
       <Table>
         <TableHeader>
           <TableRow>

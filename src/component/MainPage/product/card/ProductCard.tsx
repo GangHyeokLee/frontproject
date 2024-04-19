@@ -1,4 +1,4 @@
-import { Product } from "@/type/product.type";
+import { Product } from "@/types/product.type";
 import { ProductComponent } from "./ProductComponent";
 import { useNavigate } from "react-router-dom";
 

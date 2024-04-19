@@ -10,7 +10,7 @@ import dummyImage9 from '../assets/FB_IMG_1613092264309.jpg'
 import dummyImage10 from '../assets/20231020_090539.jpg'
 import dummyImage11 from '../assets/google.png'
 import dummyImage12 from '../assets/kakaotalk_sharing_btn_small.png'
-import { Product } from "@/type/product.type"
+import { Product } from "@/types/product.type"
 
 export const dummyProducts: Product[] = [
   {
