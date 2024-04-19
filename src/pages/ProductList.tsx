@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import Categories from "../component/MainPage/ProductList"
+
 import { dummyProducts } from "@/dummy/productDummy";
 import { useFilterProducts } from "@/hooks/useFilterProducts";
 import { ProductItems } from "component/MainPage/ProductItems";
+import { CategoryList } from "component/MainPage/CategoryList";
 
 export const ProductList = () => {
 
@@ -11,7 +12,7 @@ export const ProductList = () => {
 
   return (
     <div>
-      <Categories setFilter={setFilter} />
+      <CategoryList setFilter={setFilter} />
       <ProductItems products={products} />
     </div>
   )
