@@ -1,4 +1,3 @@
-import React from 'react'
 import NavLogout from "./NavLogout"
 import NavMyPage from "./NavMyPage"
 import NavLogin from "./NavLogin"
@@ -6,8 +5,24 @@ import NavRegister from "./NavRegister"
 import Title from "./Title"
 import TopNav from "./TopNav"
 import { NavCart } from "./NavCart"
+import { useEffect, useState } from "react"
+import firebase from './../../firebase';
 
 const Header = () => {
+
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      console.log('user', user);
+
+      //로그인이 된 상태
+      if (user) {
+        setIsLogin(true)
+      } else {
+        setIsLogin(false)
+      }
+    })
+  })
   return (
     <div
       className={`flex w-full h-12 px-3 items-center justify-between bg-white border-b border-gray-400 z-50 transition-transform duration-900 ease-in-out             `}
@@ -15,7 +30,7 @@ const Header = () => {
       <TopNav />
       <Title />
       <div className="flex">
-        {localStorage.getItem('AccessToken') ? (
+        {isLogin ? (
           <>
             <NavCart />
             <NavLogout />
