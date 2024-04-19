@@ -1,12 +1,13 @@
-
-import React from 'react'
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { Product } from "../../types/product.type";
 import { ProductCard } from "./product/card/ProductCard";
 
+interface ProductItemsProps {
+  products: Product[];
+  category: string;
+}
 
-// react-masonry-grid 써서 상품 리스트 표시
-const ProductItems: React.FC<{ products: Product[]; category: string }> = ({ products, category }) => {
+export const ProductItems = ({ products, category }: ProductItemsProps) => {
   return (
     <div className="w-full mt-5 p-12 h-full">
       <ResponsiveMasonry
@@ -20,6 +21,4 @@ const ProductItems: React.FC<{ products: Product[]; category: string }> = ({ pro
       </ResponsiveMasonry>
     </div>
   )
-}
-
-export default ProductItems
+};

@@ -5,7 +5,11 @@ const categories = [
   'ALL', '상의', '하의', '신발', '모자', '안경'
 ]
 
-const ProductList: React.FC<{ setFilter: React.Dispatch<React.SetStateAction<string>> }> = ({ setFilter }) => {
+interface ProductListProps {
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ProductList = ({ setFilter }: ProductListProps) => {
 
   return (
     <Tabs>
