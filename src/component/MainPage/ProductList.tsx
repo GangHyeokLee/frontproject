@@ -11,7 +11,7 @@ const ProductList: React.FC<{ setFilter: React.Dispatch<React.SetStateAction<str
     <Tabs>
       <TabsList className={`mt-5 items-center flex justify-center bg-gray-300 h-fit`}>
         {categories.map((x) =>
-          <CategoryItem name={x} setFilter={setFilter} />
+          <CategoryItem name={x} setFilter={setFilter} key={x} />
         )}
       </TabsList>
     </Tabs>

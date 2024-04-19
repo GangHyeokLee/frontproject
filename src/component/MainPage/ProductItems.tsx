@@ -14,7 +14,7 @@ const ProductItems: React.FC<{ products: Product[]; category: string }> = ({ pro
       >
         <Masonry>
           {products.filter((x) => (category === "ALL") || (x.category === category)).map((x) =>
-            <ProductCard {...x} />
+            <ProductCard {...x} key={x.id} />
           )}
         </Masonry>
       </ResponsiveMasonry>
