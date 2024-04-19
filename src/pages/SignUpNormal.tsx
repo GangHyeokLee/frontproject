@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import GoogleIcon from '../assets/google.png';
+import firebase from '../firebase'
 
 
 const SignUpNormal = () => {
@@ -20,34 +21,34 @@ const SignUpNormal = () => {
   const isNameValid: boolean = !!name && name.length <= 10;
 
   const isButtonDisabled: boolean =
-  !isEmailValid ||
-  !isPasswordValid ||
-  !isConfirmPasswordValid ||
-  !isNameValid;
+    !isEmailValid ||
+    !isPasswordValid ||
+    !isConfirmPasswordValid ||
+    !isNameValid;
 
   const handleRegister = async () => {
-    // const userInfo = {
-    //   email: email,
-    //   userName: name,
-    //   password: password,
-    //   nickname: nickname,
-    // };
+    try {
+      const createdUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      console.log(createdUser);
 
-    // const res = await sendRegisterInfo(userInfo);
-
-    // if (!res) {
-    //   alert('사용중인 닉네임과 메일입니다.');
-    // } else if (res.code === 'COM-000') {
-    //   alert('회원 가입 완료');
-    //   setRegisterModal(false);
-    //   setLoginModal(true);
-    // } else if (res.code === 'USR-004') {
-    //   alert('이미 사용중인 닉네임입니다.');
-    // } else if (res.code === 'USR-005') {
-    //   alert(res.message);
-    // } else if (res.code === 'USR-006') {
-    //   alert('닉네임과 이메일을 변경하세요.');
-    // }
+      await createdUser.user?.updateProfile({
+        displayName: name,
+      });
+      if (createdUser) {
+        // Firebase DB 저장
+        await firebase.database().ref('users').child(createdUser.user!.uid).set({
+          nickname: createdUser.user?.displayName,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          isSeller: false
+        })
+      }
+      firebase.auth().signOut();
+      navigate('/', { replace: true })
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -145,7 +146,8 @@ const SignUpNormal = () => {
           </div>
           <Link
             to={`${import.meta.env.VITE_APP_BACKEND_DEPLOY}/oauth2/authorization/kakao`}
-          >
+          >import firebase from './../firebase';
+
             <img
               src={GoogleIcon}
               alt="kakao icon"
