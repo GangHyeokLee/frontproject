@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import firebase from './../firebase';
 
 const SignUpSeller = () => {
 
@@ -19,8 +20,8 @@ const SignUpSeller = () => {
   const isConfirmPasswordValid: boolean = password === passchk;
   const isNameValid: boolean = !!name;
   const isPhoneValid: boolean = !!phone || /^\d{11}$/.test(phone);
-  
-  
+
+
 
   const isButtonDisabled: boolean =
     !isEmailValid ||
@@ -30,28 +31,29 @@ const SignUpSeller = () => {
     !isPhoneValid;
 
   const handleRegister = async () => {
-    // const userInfo = {
-    //   email: email,
-    //   userName: name,
-    //   password: password,
-    //   phone: phone
-    // };
+    try {
+      const createdUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      console.log(createdUser);
 
-    // const res = await sendRegisterInfo(userInfo);
-
-    // if (!res) {
-    //   alert('사용중인 닉네임과 메일입니다.');
-    // } else if (res.code === 'COM-000') {
-    //   alert('회원 가입 완료');
-    //   setRegisterModal(false);
-    //   setLoginModal(true);
-    // } else if (res.code === 'USR-004') {
-    //   alert('이미 사용중인 닉네임입니다.');
-    // } else if (res.code === 'USR-005') {
-    //   alert(res.message);
-    // } else if (res.code === 'USR-006') {
-    //   alert('닉네임과 이메일을 변경하세요.');
-    // }
+      await createdUser.user?.updateProfile({
+        displayName: name,
+      });
+      if (createdUser) {
+        // Firebase DB 저장
+        await firebase.database().ref('users').child(createdUser.user!.uid).set({
+          nickname: createdUser.user?.displayName,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          isSeller: true,
+          phone: phone
+        })
+      }
+      firebase.auth().signOut();
+      navigate('/', { replace: true })
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   return (
