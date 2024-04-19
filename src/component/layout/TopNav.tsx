@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import NavItem from './NavItem';
 import { Menu, X } from "lucide-react";
+import { NavItem } from './NavItem';
 
 interface NavItemProps {
   title: string;
@@ -16,7 +16,7 @@ const NavItemList: NavItemProps[] = [
   ...(role === "SELLER" ? [{ title: "판매 상품", path: "/selling" }] : [])
 ];
 
-const TopNav: React.FC = () => {
+export const TopNav = () => {
   const [isNavOpen, setNavOpen] = useState(false);
   const navi = useNavigate();
 
@@ -50,5 +50,3 @@ const TopNav: React.FC = () => {
     </div>
   );
 };
-
-export default TopNav;
