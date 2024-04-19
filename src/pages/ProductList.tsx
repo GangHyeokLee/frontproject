@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Categories from "../component/MainPage/ProductList"
-import ProductItems from './../component/MainPage/ProductItems';
 import { dummyProducts } from "@/dummy/productDummy";
+import { useFilterProducts } from "@/hooks/useFilterProducts";
+import { ProductItems } from "component/MainPage/ProductItems";
 
-const ProductList = () => {
+export const ProductList = () => {
 
   const [filter, setFilter] = useState("ALL");
+  const products = useFilterProducts(dummyProducts, filter);
 
   return (
     <div>
       <Categories setFilter={setFilter} />
-      <ProductItems products={dummyProducts} category={filter} />
+      <ProductItems products={products} />
     </div>
   )
 }
-
-export default ProductList
