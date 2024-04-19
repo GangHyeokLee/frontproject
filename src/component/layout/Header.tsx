@@ -5,14 +5,14 @@ import NavRegister from "./right/login/NavRegister"
 import Title from "./Title"
 import { NavCart } from "./right/guest/NavCart"
 import { useEffect, useState } from "react"
-import firebase from './../../firebase';
 import { TopNav } from './TopNav';
+import { auth } from "@/firebase"
 
 const Header = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       //로그인이 된 상태
       if (user) {
         setIsLogin(true)

@@ -1,9 +1,8 @@
-
-import firebase from '../../../../firebase';
+import { auth } from "@/firebase";
 
 const NavLogout = () => {
   const handleLogout = async () => {
-    firebase.auth().signOut();
+    auth.signOut();
     window.location.replace('/');
   };
 

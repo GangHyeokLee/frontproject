@@ -23,7 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+src/firebase.ts
+
 .env
 
 assets
-firebase.js
+
+

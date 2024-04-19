@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from '../assets/google.png';
-import firebase from '../firebase'
-
-
+import { auth } from "@/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginPage = () => {
 
@@ -13,7 +12,13 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(response);
+
+      const user = auth.currentUser;
+
+      console.log('user', user);
+
       navigate('/', { replace: true });
     } catch (error) {
       console.log('fail');
@@ -91,7 +96,6 @@ const LoginPage = () => {
               // window.location.replace(
               //   `${import.meta.env.VITE_APP_BACKEND_DEPLOY}/oauth2/authorization/kakao`
               // )import firebase from './../firebase';
-
             }
           />
         </div>

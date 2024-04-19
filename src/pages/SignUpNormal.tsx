@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import GoogleIcon from '../assets/google.png';
-import firebase from '../firebase'
+import { USER_COLLECTION, auth } from "@/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 
 const SignUpNormal = () => {
@@ -28,22 +30,22 @@ const SignUpNormal = () => {
 
   const handleRegister = async () => {
     try {
-      const createdUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const createdUser = await createUserWithEmailAndPassword(auth, email, password);
       console.log(createdUser);
 
-      await createdUser.user?.updateProfile({
-        displayName: name,
-      });
       if (createdUser) {
         // Firebase DB 저장
-        await firebase.database().ref('users').child(createdUser.user!.uid).set({
-          nickname: createdUser.user?.displayName,
+        const userDoc = doc(USER_COLLECTION, createdUser.user.uid);
+
+        await setDoc(userDoc, {
+          uid: createdUser.user.uid,
+          nickname: name,
           createdAt: new Date(),
           updatedAt: new Date(),
-          isSeller: false
+          isSeller: true,
         })
       }
-      firebase.auth().signOut();
+      auth.signOut();
       navigate('/', { replace: true })
     }
     catch (error) {
