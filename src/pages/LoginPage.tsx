@@ -13,10 +13,8 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      console.log(email, password);
-      const response = await firebase.auth().signInWithEmailAndPassword(email, password);
-      console.log(response);
-      navigate('/');
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      navigate('/', { replace: true });
     } catch (error) {
       console.log('fail');
     }

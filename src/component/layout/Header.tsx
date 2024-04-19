@@ -1,5 +1,5 @@
 import NavLogout from "./NavLogout"
-import NavMyPage from "./NavMyPage"
+// import NavMyPage from "./NavMyPage"
 import NavLogin from "./NavLogin"
 import NavRegister from "./NavRegister"
 import Title from "./Title"
@@ -34,7 +34,7 @@ const Header = () => {
           <>
             <NavCart />
             <NavLogout />
-            <NavMyPage />
+            {/* <NavMyPage /> */}
           </>
         ) : (
           <>
