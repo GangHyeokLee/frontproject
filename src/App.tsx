@@ -5,12 +5,12 @@ import LoginPage from "./pages/LoginPage"
 import SignUpSelectPage from "./pages/SignUpSelectPage"
 import SignUpNormal from "./pages/SignUpNormal"
 import SignUpSeller from "./pages/SignUpSeller"
-import ProductList from "./pages/ProductList"
 import ProductDetail from "./pages/ProductDetail"
 import AddProduct from "./pages/AddProduct"
 import CartPage from "./pages/CartPage"
 import { PaymentPage } from "./pages/PaymentPage"
 import { ReceiptPage } from "./pages/ReceiptPage"
+import { ProductList } from "pages/ProductList"
 
 function App() {
 

@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Product, dummyProducts } from "@/dummy/productDummy";
+import { dummyProducts } from "@/dummy/productDummy";
+import { Product } from "@/types/product.type";
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -32,13 +33,13 @@ const AddProduct = () => {
       const tmp: Product[] = dummyProducts.filter((x) => x.id == parseInt(id));
       if (tmp.length == 1) {
         if (imgRef.current) {
-          imgRef.current.setAttribute('src', tmp[0].productImage);
+          imgRef.current.setAttribute('src', tmp[0].imageUrl);
         }
         setProduct(tmp[0]);
-        setName(tmp[0].productName);
-        setCategory(tmp[0].productCategory);
-        setPrice(tmp[0].productPrice + "");
-        setDescription(tmp[0].productDescription);
+        setName(tmp[0].name);
+        setCategory(tmp[0].category);
+        setPrice(tmp[0].price + "");
+        setDescription(tmp[0].description);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
