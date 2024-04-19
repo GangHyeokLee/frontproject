@@ -9,7 +9,7 @@ interface ProductListProps {
   setFilter: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ProductList = ({ setFilter }: ProductListProps) => {
+export const CategoryList = ({ setFilter }: ProductListProps) => {
 
   return (
     <Tabs>
@@ -21,5 +21,3 @@ const ProductList = ({ setFilter }: ProductListProps) => {
     </Tabs>
   )
 }
-
-export default ProductList
