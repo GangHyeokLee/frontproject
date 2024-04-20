@@ -1,4 +1,3 @@
-import { dummyProducts } from "@/dummy/productDummy";
 import AdBanner from "../component/MainPage/AdBanner"
 import { useState } from "react";
 import { ProductItems } from "component/MainPage/ProductItems";
@@ -8,7 +7,7 @@ import { CategoryList } from "component/MainPage/CategoryList";
 const MainPage = () => {
 
   const [filter, setFilter] = useState("ALL");
-  const products = useFilterProducts([...dummyProducts], filter);
+  const products = useFilterProducts(filter);
 
   return (
     <div className="flex flex-col">
