@@ -2,25 +2,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { dummyProducts } from "@/dummy/productDummy";
+import { PRODUCT_COLLECTION, auth, storage } from "@/firebase";
 import { Product } from "@/types/product.type";
+import { addDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 
 const categories = [
-  'ALL', '상의', '하의', '신발', '모자', '안경'
+  '상의', '하의', '신발', '모자', '안경'
 ]
 
 const AddProduct = () => {
 
-  const [product, setProduct] = useState<Product>();
   const id = useParams().id;
 
+  // const [pid, setPid] = useState("");
   const [name, setName] = useState("");
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState('');
   const [imgURL, setImgURL] = useState('');
-  const [productImage, setProductImage] = useState<File | undefined>();
+  const [image, setImage] = useState<File | undefined>();
 
   const categoryRef: RefObject<HTMLButtonElement> = useRef<HTMLButtonElement>(null);
   const descriptionRef: RefObject<HTMLTextAreaElement> = useRef<HTMLTextAreaElement>(null);
@@ -35,7 +38,6 @@ const AddProduct = () => {
         if (imgRef.current) {
           imgRef.current.setAttribute('src', tmp[0].imageUrl);
         }
-        setProduct(tmp[0]);
         setName(tmp[0].name);
         setCategory(tmp[0].category);
         setPrice(tmp[0].price + "");
@@ -44,6 +46,20 @@ const AddProduct = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (imgRef.current && imgURL?.length) {
+      imgRef.current.setAttribute('src', imgURL);
+    }
+  }, [imgURL]);
+
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      setImage(file);
+      setImgURL(URL.createObjectURL(file));
+    }
+  };
 
   const handleSubmit = async () => {
     if (!imgRef.current?.src) {
@@ -55,33 +71,35 @@ const AddProduct = () => {
       return;
     }
 
-    if (window.confirm('피드 작성을 완료하시겠습니까?')) {
-      // const response = await createPost({
-      //   categoryName: category,
-      //   activityTime:
-      //     category === '기상'
-      //       ? (hour * 60 + minute).toString()
-      //       : minute.toString(),
-      //   content: content,
-      // });
+    // 먼저 storage에 저장하고 url 받아서 firestore에 저장
+    if (image) {
+      const filePath = `/products/${category}/${image?.name}`;
 
-      // if (response && response.message === 'OK') {
-      //   setPost({
-      //     ...feed,
-      //     categoryName: category,
-      //     content: content,
-      //     imgUrl: imgURL,
-      //     activityTime: category === '기상' ? hour * 60 + minute : minute,
-      //   });
-      //   const feedId = response.data.id;
-      //   const formData = new FormData();
-      //   formData.append('image', postImage as File);
-      //   const imgResponse = await sendPostImage(formData, feedId);
+      try {
+        const imageRef = ref(storage, filePath);
+        await uploadBytes(imageRef, image);
 
-      //   if (imgResponse) {
-      //     navigate(`/feed/${response.data.id}`, { replace: true });
-      //   }
-      // }
+        // 파일 url
+        const downloadURL = await getDownloadURL(imageRef);
+        await addDoc(
+          PRODUCT_COLLECTION,
+          {
+            sellerId: auth.currentUser?.uid,
+            name: name,
+            price: price,
+            description: description,
+            category: category,
+            imageUrl: downloadURL,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          }
+        )
+        navigate('/');
+
+      } catch (error) {
+        console.log(error);
+      }
+
     }
   };
 
@@ -135,19 +153,6 @@ const AddProduct = () => {
     // }
   };
 
-  useEffect(() => {
-    if (imgRef.current && imgURL?.length) {
-      imgRef.current.setAttribute('src', imgURL);
-    }
-  }, [imgURL]);
-
-  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event.target.files[0];
-      setProductImage(file);
-      setImgURL(URL.createObjectURL(file));
-    }
-  };
 
   return (
     <div className="flex flex-col mx-10 mt-10 border-2 rounded-xl px-10 py-10 font-ibm">

@@ -3,7 +3,6 @@ export interface Product {
   sellerId: number;
   name: string;
   price: number;
-  quantity: number;
   description: string;
   category: string;
   imageUrl: string;
