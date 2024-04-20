@@ -1,5 +1,5 @@
+import { fetchProduct } from "@/api/products/fetchProduct";
 import { Button } from "@/components/ui/button";
-import { dummyProducts } from "@/dummy/productDummy";
 import { Product } from "@/types/product.type";
 import { ChevronLeft, Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -14,9 +14,14 @@ const ProductDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id) {
-      setProduct(dummyProducts[parseInt(id) - 1])
+
+    const getProduct = async () => {
+      if (id) {
+        const response = await fetchProduct(id);
+        setProduct(response);
+      }
     }
+    getProduct();
   }, [id])
 
   return (
@@ -37,10 +42,10 @@ const ProductDetail = () => {
             <p className="w-48">배송정보</p>
             <span>
               <p className="mb-2">일반 출고</p>
-              <p className="flex">
+              <span className="flex">
                 <p className="text-blue-700">2일 이내 &nbsp;</p>
                 출고 (주말, 공휴일 제외)
-              </p>
+              </span>
             </span>
           </div>
           <div className="flex justify-start text-sm mt-8">
@@ -52,7 +57,6 @@ const ProductDetail = () => {
               </p>
             </span>
           </div>
-
           <div className="flex justify-between pr-20 mt-8 items-center">
             <span className="flex items-center">
               <Button onClick={() => { setQuantity(quantity + 1) }} className="bg-white text-black border-2 mr-5 hover:bg-white" size="icon" ><Plus className="h-4 w-4" /></Button>
