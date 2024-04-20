@@ -35,15 +35,15 @@ const SignUpNormal = () => {
 
       if (createdUser) {
         // Firebase DB 저장
-        const userDoc = doc(USER_COLLECTION, createdUser.user.uid);
-
-        await setDoc(userDoc, {
-          uid: createdUser.user.uid,
-          nickname: name,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          isSeller: true,
-        })
+        await setDoc(
+          doc(USER_COLLECTION, createdUser.user.uid),
+          {
+            uid: createdUser.user.uid,
+            nickname: name,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            isSeller: false,
+          })
       }
       auth.signOut();
       navigate('/', { replace: true })

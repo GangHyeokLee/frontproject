@@ -23,8 +23,6 @@ const SignUpSeller = () => {
   const isNameValid: boolean = !!name;
   const isPhoneValid: boolean = !!phone || /^\d{11}$/.test(phone);
 
-
-
   const isButtonDisabled: boolean =
     !isEmailValid ||
     !isPasswordValid ||

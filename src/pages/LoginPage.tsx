@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from '../assets/google.png';
-import { auth } from "@/firebase";
+import { USER_COLLECTION, auth } from "@/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 const LoginPage = () => {
 
@@ -12,13 +13,13 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
+      await signInWithEmailAndPassword(auth, email, password);
+      const uid = auth.currentUser?.uid;
+      if (uid) {
+        const docSnap = await getDoc(doc(USER_COLLECTION, uid));
+        localStorage.setItem("isSeller", docSnap.data()?.isSeller)
 
-      const user = auth.currentUser;
-
-      console.log('user', user);
-
+      }
       navigate('/', { replace: true });
     } catch (error) {
       console.log('fail');
