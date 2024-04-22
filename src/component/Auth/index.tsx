@@ -5,3 +5,4 @@ export * from "./DivideLine";
 export * from "./SocialLogin";
 export * from "./Button";
 export * from "./Title";
+export * from "./ErrorMsg";
