@@ -1,6 +1,8 @@
-import { fetchProduct } from "@/api/products/fetchProduct";
+import { getProduct } from "@/api/products/getProduct";
 import { Button } from "@/components/ui/button";
+import { storage } from "@/firebase";
 import { Product } from "@/types/product.type";
+import { getDownloadURL, ref } from "firebase/storage";
 import { ChevronLeft, Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
@@ -12,16 +14,22 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<Product>();
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
+  const isSeller = localStorage.getItem('isSeller');
+  const [imageUrl, setImageUrl] = useState("");
+
 
   useEffect(() => {
-
-    const getProduct = async () => {
+    const get = async () => {
       if (id) {
-        const response = await fetchProduct(id);
-        setProduct(response);
+        const response = await getProduct(id);
+        if (response) {
+          setProduct(response);
+          const url = await getDownloadURL(ref(storage, response.imageUrl));
+          setImageUrl(url);
+        }
       }
     }
-    getProduct();
+    get();
   }, [id])
 
   return (
@@ -31,7 +39,7 @@ const ProductDetail = () => {
       </Button>
       <div className="w-full flex justify-between mb-20">
         <div className="mr-28 w-fit">
-          <img src={product?.imageUrl} className="w-96 h-96" />
+          <img src={imageUrl} className="w-96 h-96" />
         </div>
         <div className="flex flex-col justify-start flex-grow border-t-4 border-t-black pt-8">
           <div className="text-3xl font-extrabold pb-10">{product?.name}</div>
@@ -65,10 +73,16 @@ const ProductDetail = () => {
             </span>
             <p>{product ? (quantity * product.price).toLocaleString() : 0} 원</p>
           </div>
-
           <div className="mt-12 flex justify-between">
-            <Button className="text-2xl px-10 py-5 h-fit bg-white border-2 text-black w-full hover:bg-gray-300">장바구니 담기</Button>
-            <Button className="text-2xl px-10 py-5 h-fit w-full ml-6">바로 구매</Button>
+            {
+              isSeller ?
+                <Button className="text-2xl px-10 py-5 h-fit bg-white border-2 text-black w-full hover:bg-gray-300" onClick={() => navigate(`/edit/${id}`)}>수정하기</Button>
+                :
+                <>
+                  <Button className="text-2xl px-10 py-5 h-fit bg-white border-2 text-black w-full hover:bg-gray-300">장바구니 담기</Button>
+                  <Button className="text-2xl px-10 py-5 h-fit w-full ml-6">바로 구매</Button>
+                </>
+            }
           </div>
         </div>
       </div>

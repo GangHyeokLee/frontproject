@@ -23,8 +23,6 @@ export const AuthForm = ({
   isRequired = true,
   isValidate = false, validateKey = "", validateName = ""
 }: FormProps) => {
-
-  console.log(name, isPattern && errors[name]?.type === "pattern", errorMsg);
   return (
     <div className="w-full mb-5">
       <div className="mb-3 whitespace-nowrap">{title + (isRequired ? "*" : "")}</div>
