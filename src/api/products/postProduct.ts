@@ -21,7 +21,7 @@ export const postProduct = async ({ image, name, price, description, category, c
 
   // 파일 url
   const downloadURL = await getDownloadURL(imageRef);
-  await addDoc(
+  const response = await addDoc(
     PRODUCT_COLLECTION,
     {
       sellerId: auth.currentUser?.uid,
@@ -35,5 +35,5 @@ export const postProduct = async ({ image, name, price, description, category, c
       updatedAt: updatedAt,
     }
   )
-
+  return response.id;
 }

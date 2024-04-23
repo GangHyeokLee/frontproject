@@ -1,6 +1,7 @@
 import { deleteProduct } from "@/api/products/deleteProduct";
 import { getProduct } from "@/api/products/getProduct";
 import { postProduct } from "@/api/products/postProduct";
+import { updateProduct } from "@/api/products/updateProduct";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -78,8 +79,8 @@ const AddProduct = () => {
     // 먼저 storage에 저장하고 url 받아서 firestore에 저장
     if (image) {
       try {
-        postProduct({ image, name, price, description, category });
-        navigate('/products', { replace: true });
+        const pid = await postProduct({ image, name, price, description, category });
+        navigate(`/product/${pid}`, { replace: true });
       } catch (error) {
         console.log(error);
       }
@@ -95,42 +96,18 @@ const AddProduct = () => {
       categoryRef.current?.focus();
       return;
     }
-
-    // if (window.confirm('피드 수정을 완료하시겠습니까?')) {
-    //   const response = await editPost({
-    //     categoryName: category,
-    //     activityTime: category === '기상' ? hour * 60 + minute : minute,
-    //     content: content,
-    //     id: id!,
-    //     imgUrl: imgURL,
-    //   });
-    //   if (response && response.message === 'OK') {
-    //     setFeed({
-    //       ...feed,
-    //       categoryName: category,
-    //       content: content,
-    //       imgUrl: imgURL,
-    //       activityTime: category === '기상' ? hour * 60 + minute : minute,
-    //     });
-
-    //     if (postImage) {
-    //       const feedId = response.data.id;
-    //       const formData = new FormData();
-    //       formData.append('image', postImage as File);
-    //       const imgResponse = await sendPostImage(formData, feedId);
-
-    //       if (imgResponse) {
-    //         navigate(`/feed/${response.data.id}`, { replace: true });
-    //       }
-    //     } else {
-    //       navigate(`/feed/${response.data.id}`, { replace: true });
-    //     }
-    //   }
-    // }
+    try {
+      if (id) {
+        console.log(id);
+        updateProduct({ id, category, name, price, description, dir, image });
+        navigate(`/product/${id}`, { replace: true })
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDeletePost = async () => {
-    // if (id) { await deleteProduct(id!, `/products/${category}/${fileName}}`); }
     if (id) { await deleteProduct(id!, dir); }
     navigate('/products', { replace: true });
   };
