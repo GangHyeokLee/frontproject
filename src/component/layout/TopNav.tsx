@@ -8,12 +8,12 @@ interface NavItemProps {
   path: string;
 }
 
-const role = localStorage.getItem('role');
+const role = localStorage.getItem('isSeller');
 
 const NavItemList: NavItemProps[] = [
   { title: "전체 상품", path: "/products" },
   { title: "양말", path: "/chat" },
-  ...(role === "SELLER" ? [{ title: "판매 상품", path: "/selling" }] : [])
+  ...(role ? [{ title: "상품 추가", path: "/add" }] : [])
 ];
 
 export const TopNav = () => {

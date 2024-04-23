@@ -1,4 +1,4 @@
-import { fetchProductList } from "@/api/products/fetchProductList";
+import { getProductList } from "@/api/products/getProductList";
 import { Product } from "@/types/product.type"
 import { useEffect, useState } from "react"
 
@@ -7,12 +7,12 @@ export const useFilterProducts = (filter: string) => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await fetchProductList();
+    const get = async () => {
+      const response = await getProductList();
       setInitialProducts(response);
     }
 
-    getProducts();
+    get();
   }, [])
 
   useEffect(() => {

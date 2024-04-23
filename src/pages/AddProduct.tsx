@@ -1,11 +1,11 @@
+import { deleteProduct } from "@/api/products/deleteProduct";
+import { getProduct } from "@/api/products/getProduct";
+import { postProduct } from "@/api/products/postProduct";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { dummyProducts } from "@/dummy/productDummy";
-import { PRODUCT_COLLECTION, auth, storage } from "@/firebase";
-import { Product } from "@/types/product.type";
-import { addDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "@/firebase";
+import { getDownloadURL, ref } from "firebase/storage";
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -17,7 +17,6 @@ const AddProduct = () => {
 
   const id = useParams().id;
 
-  // const [pid, setPid] = useState("");
   const [name, setName] = useState("");
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState("");
@@ -32,26 +31,32 @@ const AddProduct = () => {
 
   // 상품이 있을 경우 이미지 미리 보여주기
   useEffect(() => {
-    if (id) {
-      const tmp: Product[] = dummyProducts.filter((x) => x.id == parseInt(id));
-      if (tmp.length == 1) {
+    const get = async () => {
+      if (id) {
+        const response = await getProduct(id);
         if (imgRef.current) {
-          imgRef.current.setAttribute('src', tmp[0].imageUrl);
+          imgRef.current.setAttribute('src', response.imageUrl);
         }
-        setName(tmp[0].name);
-        setCategory(tmp[0].category);
-        setPrice(tmp[0].price + "");
-        setDescription(tmp[0].description);
+        setName(response.name);
+        setCategory(response.category);
+        setPrice(response.price + "");
+        setDescription(response.description);
+        const url = await getDownloadURL(ref(storage, response.imageUrl));
+        setImgURL(url);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    get();
+  }, [id]);
+
+
 
   useEffect(() => {
     if (imgRef.current && imgURL?.length) {
       imgRef.current.setAttribute('src', imgURL);
     }
   }, [imgURL]);
+
+
 
   const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -73,44 +78,24 @@ const AddProduct = () => {
 
     // 먼저 storage에 저장하고 url 받아서 firestore에 저장
     if (image) {
-      const filePath = `/products/${category}/${image?.name}`;
-
       try {
-        const imageRef = ref(storage, filePath);
-        await uploadBytes(imageRef, image);
-
-        // 파일 url
-        const downloadURL = await getDownloadURL(imageRef);
-        await addDoc(
-          PRODUCT_COLLECTION,
-          {
-            sellerId: auth.currentUser?.uid,
-            name: name,
-            price: price,
-            description: description,
-            category: category,
-            imageUrl: downloadURL,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }
-        )
-        navigate('/');
-
+        postProduct({ image, name, price, description, category });
+        navigate('/', { replace: true });
       } catch (error) {
         console.log(error);
       }
-
     }
   };
 
   const handleEdit = async () => {
-    // if (category === '기상' && hour === 0) {
-    //   hourRef.current?.focus();
-    //   return;
-    // } else if (category !== '기상' && minute === 0) {
-    //   minuteRef.current?.focus();
-    //   return;
-    // }
+    if (!imgRef.current?.src) {
+      alert('이미지를 업로드 하세요');
+      return;
+    }
+    if (category === '') {
+      categoryRef.current?.focus();
+      return;
+    }
 
     // if (window.confirm('피드 수정을 완료하시겠습니까?')) {
     //   const response = await editPost({
@@ -146,11 +131,9 @@ const AddProduct = () => {
   };
 
   const handleDeletePost = async () => {
-    // const response = await deletePost(parseInt(id!));
-    // if (response && response.message === 'OK') {
-    //   alert('삭제 완료');
-    //   navigate('/feed', { replace: true });
-    // }
+    // if (id) { await deleteProduct(id!, `/products/${category}/${fileName}}`); }
+    if (id) { await deleteProduct(id!, imgURL); }
+    navigate('/products', { replace: true });
   };
 
 
