@@ -4,7 +4,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { Ask, AuthForm, DivideLine, SocialLogin, Button, Title } from "component/Auth";
 import { FieldValues, useForm } from "react-hook-form";
-import GoogleIcon from '../assets/google.png';
+import GoogleIcon from '../../assets/google.png';
+import { handleGoogleLogin } from "@/api/auth/handleGoogleLogin";
 
 const LoginPage = () => {
 
@@ -27,6 +28,10 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogle = () => {
+    handleGoogleLogin();
+  }
+
   return (
     <div className="flex justify-center pt-16">
       <div className="w-[50%] max-w-[800px] relative h-fit flex rounded-xl overflow-hidden">
@@ -39,7 +44,7 @@ const LoginPage = () => {
             <Button name="로그인" />
           </form>
           <DivideLine />
-          <SocialLogin src={GoogleIcon} alt="Google Login" onClick={() => { }} />
+          <SocialLogin src={GoogleIcon} alt="Google Login" onClick={handleGoogle} />
         </div>
       </div>
     </div >

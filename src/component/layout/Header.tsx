@@ -1,9 +1,9 @@
-import NavLogout from "./right/guest/NavLogout"
+import NavLogout from "./right/login/NavLogout"
 // import NavMyPage from "./NavMyPage"
-import NavLogin from "./right/login/NavLogin"
-import NavRegister from "./right/login/NavRegister"
+import NavLogin from "./right/guest/NavLogin"
+import NavRegister from "./right/guest/NavRegister"
 import Title from "./Title"
-import { NavCart } from "./right/guest/NavCart"
+import { NavCart } from "./right/login/NavCart"
 import { useEffect, useState } from "react"
 import { TopNav } from './TopNav';
 import { auth } from "@/firebase"

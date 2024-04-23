@@ -3,6 +3,7 @@ import { auth } from "@/firebase";
 const NavLogout = () => {
   const handleLogout = async () => {
     auth.signOut();
+    localStorage.clear();
     window.location.replace('/');
   };
 
