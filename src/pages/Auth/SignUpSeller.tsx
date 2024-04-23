@@ -27,7 +27,7 @@ const SignUpSeller = () => {
           nickname: data.name,
           createdAt: new Date(),
           updatedAt: new Date(),
-          isSeller: true,
+          isSeller: "SELLER",
           phone: data.phone || ""
         })
       }

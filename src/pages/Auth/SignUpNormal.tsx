@@ -18,8 +18,6 @@ const SignUpNormal = () => {
   const onSubmit = async (data: FieldValues) => {
     try {
       const createdUser = await createUserWithEmailAndPassword(auth, data.email, data.password);
-      console.log(createdUser);
-
       if (createdUser) {
         // Firebase DB 저장
         await setDoc(
@@ -29,7 +27,7 @@ const SignUpNormal = () => {
             nickname: data.name,
             createdAt: new Date(),
             updatedAt: new Date(),
-            isSeller: false,
+            isSeller: "CUSTOMER",
           })
       }
       auth.signOut();
