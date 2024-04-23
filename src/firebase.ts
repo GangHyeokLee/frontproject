@@ -20,4 +20,5 @@ export const storage = getStorage(app);
 
 /* Firestore ref */
 export const USER_COLLECTION = collection(db, "users");
-export const PRODUCT_COLLECTION = collection(db, "products")
+export const PRODUCT_COLLECTION = collection(db, "products");
+export const ORDER_COLLECTION = collection(db, "orders");
