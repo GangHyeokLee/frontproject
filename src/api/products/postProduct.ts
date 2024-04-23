@@ -1,6 +1,6 @@
 import { PRODUCT_COLLECTION, auth, storage } from "@/firebase";
 import { addDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 interface postProductProps {
   image: File;
@@ -19,15 +19,18 @@ export const postProduct = async ({ image, name, price, description, category, c
   const imageRef = ref(storage, filePath);
   await uploadBytes(imageRef, image);
 
+  // 파일 url
+  const downloadURL = await getDownloadURL(imageRef);
   await addDoc(
     PRODUCT_COLLECTION,
     {
       sellerId: auth.currentUser?.uid,
       name: name,
       price: price,
+      dir: filePath,
       description: description,
       category: category,
-      imageUrl: filePath,
+      imageUrl: downloadURL,
       createdAt: createdAt,
       updatedAt: updatedAt,
     }

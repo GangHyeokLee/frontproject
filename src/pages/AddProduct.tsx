@@ -4,8 +4,6 @@ import { postProduct } from "@/api/products/postProduct";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { storage } from "@/firebase";
-import { getDownloadURL, ref } from "firebase/storage";
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -22,6 +20,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState('');
   const [imgURL, setImgURL] = useState('');
+  const [dir, setDir] = useState("");
   const [image, setImage] = useState<File | undefined>();
 
   const categoryRef: RefObject<HTMLButtonElement> = useRef<HTMLButtonElement>(null);
@@ -41,8 +40,8 @@ const AddProduct = () => {
         setCategory(response.category);
         setPrice(response.price + "");
         setDescription(response.description);
-        const url = await getDownloadURL(ref(storage, response.imageUrl));
-        setImgURL(url);
+        setImgURL(response.imageUrl);
+        setDir(response.dir);
       }
     }
     get();
@@ -80,7 +79,7 @@ const AddProduct = () => {
     if (image) {
       try {
         postProduct({ image, name, price, description, category });
-        navigate('/', { replace: true });
+        navigate('/products', { replace: true });
       } catch (error) {
         console.log(error);
       }
@@ -132,7 +131,7 @@ const AddProduct = () => {
 
   const handleDeletePost = async () => {
     // if (id) { await deleteProduct(id!, `/products/${category}/${fileName}}`); }
-    if (id) { await deleteProduct(id!, imgURL); }
+    if (id) { await deleteProduct(id!, dir); }
     navigate('/products', { replace: true });
   };
 
@@ -181,7 +180,7 @@ const AddProduct = () => {
           <div className="flex mb-5 flex-row items-center">
             <div className="font-bold mr-5 w-16">가격</div>
             <Input
-              type="text"
+              type="number"
               onChange={(e) => { setPrice(e.target.value) }}
               value={price}
               className="w-[180px] border-2 flex-1"
