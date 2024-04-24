@@ -1,46 +1,50 @@
+import { getOrders } from "@/api/order/getOrders"
 import CartRow from "@/component/Cart/CartRow"
 import { BuyButtons } from "@/component/Cart/product/BuyButtons"
 import { TotalPrice } from "@/component/Cart/product/TotalPrice"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { dummyProducts } from "@/dummy/productDummy"
+import { CartProduct } from "@/types"
 import { useEffect, useState } from "react"
+
+
 
 // 교보문고 보니까 장바구니에서 상품 수량 변경할 때마다 계속 요청 보냄 따라해야지
 const CartPage = () => {
 
-
-  const [cartProduct, setCartProduct] = useState(dummyProducts);
+  const [cartProduct, setCartProduct] = useState<CartProduct[]>([]);
   const [headChecked, setHeadChecked] = useState(false);
-  const [productChecked, setProductChecked] = useState<boolean[]>([]);
 
   useEffect(() => {
-    const len = cartProduct.length
-    setProductChecked(new Array(len).fill(false));
+    const get = async () => {
+      const response = await getOrders();
+      setCartProduct(response);
+    }
+    get();
 
-  }, [cartProduct])
+  }, [])
 
   const handleAllClick = () => {
-    setProductChecked(productChecked?.map((x) => {
-      x = !headChecked;
-      return x
+    setCartProduct(cartProduct?.map((x) => {
+      return {
+        ...x,
+        isChecked: !headChecked
+      }
     }));
     setHeadChecked(!headChecked);
   }
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     // product id 날려달라고 요청보냄
     const deletedProduct = cartProduct.filter((x) => x.id != id);
     setCartProduct(deletedProduct)
     console.log(id);
   }
 
-  const handleCheckbox = (id: number) => {
+  const handleCheckbox = (id: string) => {
     const idx = cartProduct.findIndex((x) => x.id == id);
-
-    const tmpProductChecked = [...productChecked]
-    tmpProductChecked[idx] = !tmpProductChecked[idx]
-    setProductChecked(tmpProductChecked)
+    cartProduct[idx].isChecked = !cartProduct[idx].isChecked;
+    setCartProduct([...cartProduct]);
   }
 
   return (
@@ -57,8 +61,8 @@ const CartPage = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {cartProduct.map((x, idx) =>
-            <CartRow product={x} key={x.id} isChecked={productChecked[idx]} handleDelete={handleDelete} handleCheckbox={handleCheckbox} />
+          {cartProduct && cartProduct.map((x) =>
+            <CartRow product={x} key={x.id} handleDelete={handleDelete} handleCheckbox={handleCheckbox} />
           )}
         </TableBody>
       </Table>

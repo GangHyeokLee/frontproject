@@ -13,13 +13,11 @@ const LoginPage = () => {
   const { register, formState: { errors }, handleSubmit } = useForm();
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       const uid = auth.currentUser?.uid;
       if (uid) {
         const docSnap = await getDoc(doc(USER_COLLECTION, uid));
-        console.log(docSnap.data());
         localStorage.setItem("isSeller", docSnap.data()?.isSeller)
       }
       navigate('/', { replace: true });

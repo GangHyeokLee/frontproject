@@ -1,5 +1,5 @@
 export interface Product {
-  id: string | number;
+  id: string;
   sellerId: number;
   name: string;
   dir: string;
@@ -9,4 +9,9 @@ export interface Product {
   imageUrl: string;
   createdAt: Date;
   updatedAt?: Date;
+}
+
+export interface CartProduct extends Product {
+  quantity: number;
+  isChecked: boolean;
 }
