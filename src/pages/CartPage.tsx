@@ -1,3 +1,4 @@
+import { deleteOrder } from "@/api/order/deleteOrder"
 import { getOrders } from "@/api/order/getOrders"
 import CartRow from "@/component/Cart/CartRow"
 import { BuyButtons } from "@/component/Cart/product/BuyButtons"
@@ -34,11 +35,12 @@ const CartPage = () => {
     setHeadChecked(!headChecked);
   }
 
-  const handleDelete = (id: string) => {
-    // product id 날려달라고 요청보냄
-    const deletedProduct = cartProduct.filter((x) => x.id != id);
-    setCartProduct(deletedProduct)
-    console.log(id);
+  const handleDelete = async (id: string) => {
+    await deleteOrder(id).then(async () => {
+      const response = await getOrders();
+      setCartProduct(response);
+    })
+
   }
 
   const handleCheckbox = (id: string) => {
