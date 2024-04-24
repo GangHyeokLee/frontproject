@@ -40,8 +40,13 @@ const CartPage = () => {
       const response = await getOrders();
       setCartProduct(response);
     })
-
   }
+
+  // const handleDeleteAll = async () => {
+  //   await deleteAllOrders().then(() => {
+  //     setCartProduct([]);
+  //   })
+  // }
 
   const handleCheckbox = (id: string) => {
     const idx = cartProduct.findIndex((x) => x.id == id);

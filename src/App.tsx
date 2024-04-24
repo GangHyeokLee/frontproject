@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router-dom"
 import Layout from "./component/layout/Layout"
-import MainPage from "./pages/MainPage"
+import MainPage from "./pages/Products/MainPage"
 import LoginPage from "./pages/Auth/LoginPage"
 import SignUpSelectPage from "./pages/Auth/SignUpSelectPage"
 import SignUpNormal from "./pages/Auth/SignUpNormal"
 import SignUpSeller from "./pages/Auth/SignUpSeller"
-import ProductDetail from "./pages/ProductDetail"
-import AddProduct from "./pages/AddProduct"
-import CartPage from "./pages/CartPage"
-import { PaymentPage } from "./pages/PaymentPage"
-import { ReceiptPage } from "./pages/ReceiptPage"
-import { ProductList } from "pages/ProductList"
+import ProductDetail from "./pages/Products/ProductDetail"
+import AddProduct from "./pages/Products/AddProduct"
+import CartPage from "./pages/Order/CartPage"
+import { PaymentPage } from "./pages/Order/PaymentPage"
+import { ReceiptPage } from "./pages/Order/ReceiptPage"
+import { ProductList } from "pages/Products/ProductList"
 
 function App() {
 

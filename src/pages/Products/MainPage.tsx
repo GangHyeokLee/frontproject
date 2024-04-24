@@ -1,4 +1,4 @@
-import AdBanner from "../component/MainPage/AdBanner"
+import AdBanner from "../../component/MainPage/AdBanner"
 import { useState } from "react";
 import { ProductItems } from "component/MainPage/ProductItems";
 import { useFilterProducts } from "@/hooks/useFilterProducts";

@@ -9,9 +9,9 @@ export const ProductList = () => {
   const products = useFilterProducts(filter);
 
   return (
-    <div>
+    <>
       <CategoryList setFilter={setFilter} />
       <ProductItems products={products} />
-    </div>
+    </>
   )
 }
