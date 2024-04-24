@@ -1,20 +1,19 @@
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { TableCell, TableRow } from "@/components/ui/table"
-import { Product } from '@/types/product.type';
 import { useQuantity } from "@/hooks/useQuantity"
 import { QuantityButton } from "../ProductDetail/QuantityButton"
+import { CartProduct } from "@/types";
 
 interface CartRowProps {
-  product: Product;
-  isChecked: boolean;
-  handleDelete: (id: number) => void;
-  handleCheckbox: (id: number) => void;
+  product: CartProduct;
+  handleDelete: (id: string) => void;
+  handleCheckbox: (id: string) => void;
 }
 
-const CartRow = ({ product, isChecked, handleDelete, handleCheckbox }: CartRowProps) => {
+const CartRow = ({ product, handleDelete, handleCheckbox }: CartRowProps) => {
 
-  const { quantity, incrementQuantity, decrementQuantity } = useQuantity(product.quantity);
+  const { quantity, incrementQuantity, decrementQuantity } = useQuantity(product.quantity, product.id);
 
   return (
     <TableRow>
@@ -26,7 +25,7 @@ const CartRow = ({ product, isChecked, handleDelete, handleCheckbox }: CartRowPr
         <QuantityButton quantity={quantity} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} />
       </TableCell>
       <TableCell className="text-center"><Button onClick={() => handleDelete(product.id)}>삭제</Button></TableCell>
-      <TableCell><Checkbox checked={isChecked} onClick={(() => handleCheckbox(product.id))} /></TableCell>
+      <TableCell><Checkbox checked={product.isChecked} onClick={(() => handleCheckbox(product.id))} /></TableCell>
     </TableRow>
   )
 }
