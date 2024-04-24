@@ -1,14 +1,19 @@
+import { postQuantity } from "@/api/order/postQuantity";
 import { useState } from "react"
 
-export const useQuantity = (initialQuantity: number) => {
+export const useQuantity = (initialQuantity: number, id: string) => {
   const [quantity, setQuantity] = useState(initialQuantity);
 
   const incrementQuantity = () => {
+    postQuantity(id, quantity + 1);
     setQuantity(quantity + 1);
   }
 
   const decrementQuantity = () => {
-    setQuantity((quantity - 1) > 0 ? (quantity - 1) : 1);
+    if (quantity > 1) {
+      postQuantity(id, quantity - 1);
+      setQuantity(quantity - 1);
+    }
   }
 
   return { quantity, incrementQuantity, decrementQuantity }
