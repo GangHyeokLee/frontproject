@@ -8,25 +8,26 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { CartProduct } from "@/types"
 import { useEffect, useState } from "react"
 
+interface CartPageProps {
+  onNext: () => void;
+  setBuyProducts: React.Dispatch<React.SetStateAction<CartProduct[]>>;
+}
+const CartPage = ({ setBuyProducts, onNext }: CartPageProps) => {
 
-
-// 교보문고 보니까 장바구니에서 상품 수량 변경할 때마다 계속 요청 보냄 따라해야지
-const CartPage = () => {
-
-  const [cartProduct, setCartProduct] = useState<CartProduct[]>([]);
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [headChecked, setHeadChecked] = useState(false);
 
   useEffect(() => {
     const get = async () => {
       const response = await getOrders();
-      setCartProduct(response);
+      setCartProducts(response);
     }
     get();
 
   }, [])
 
   const handleAllClick = () => {
-    setCartProduct(cartProduct?.map((x) => {
+    setCartProducts(cartProducts?.map((x) => {
       return {
         ...x,
         isChecked: !headChecked
@@ -38,7 +39,7 @@ const CartPage = () => {
   const handleDelete = async (id: string) => {
     await deleteOrder(id).then(async () => {
       const response = await getOrders();
-      setCartProduct(response);
+      setCartProducts(response);
     })
   }
 
@@ -49,9 +50,14 @@ const CartPage = () => {
   // }
 
   const handleCheckbox = (id: string) => {
-    const idx = cartProduct.findIndex((x) => x.id == id);
-    cartProduct[idx].isChecked = !cartProduct[idx].isChecked;
-    setCartProduct([...cartProduct]);
+    const idx = cartProducts.findIndex((x) => x.id == id);
+    cartProducts[idx].isChecked = !cartProducts[idx].isChecked;
+    setCartProducts([...cartProducts]);
+  }
+
+  const handleBuyProducts = () => {
+    setBuyProducts(cartProducts.filter((p) => p.isChecked));
+    onNext();
   }
 
   return (
@@ -68,17 +74,17 @@ const CartPage = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {cartProduct && cartProduct.map((x) =>
+          {cartProducts && cartProducts.map((x) =>
             <CartRow product={x} key={x.id} handleDelete={handleDelete} handleCheckbox={handleCheckbox} />
           )}
         </TableBody>
       </Table>
       <TotalPrice
-        productTypes={cartProduct.length}
-        totalQuantity={cartProduct.reduce((prev, curr) => prev + curr.quantity, 0)}
-        totalPrice={cartProduct.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}
+        productTypes={cartProducts.length}
+        totalQuantity={cartProducts.reduce((prev, curr) => prev + curr.quantity, 0)}
+        totalPrice={cartProducts.reduce((prev, curr) => prev + curr.quantity * curr.price, 0)}
       />
-      <BuyButtons />
+      <BuyButtons onNext={handleBuyProducts} />
     </div>
   )
 }
