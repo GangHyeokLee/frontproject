@@ -1,9 +1,9 @@
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Product } from "@/types/product.type"
+import { CartProduct } from "@/types/product.type"
 import { OrderRow } from "./OrderRow"
 
 interface OrderTableProps {
-  basketItems: Product[]
+  basketItems: CartProduct[]
 }
 
 export const OrderTable = ({ basketItems }: OrderTableProps) => {
