@@ -3,7 +3,6 @@ import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 export const postOrder = async (pid: string, uid: string, quantity: number) => {
 
-
   // const docRef = ;
 
   try {
@@ -23,6 +22,8 @@ export const postOrder = async (pid: string, uid: string, quantity: number) => {
       const response = await updateDoc(doc(ORDER_COLLECTION, pid), {
         quantity: docSnap.data().quantity + quantity
       });
+
+      window.alert("장바구니 담기 완료!")
       return response;
     }
   } catch (error) {

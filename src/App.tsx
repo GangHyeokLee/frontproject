@@ -9,7 +9,8 @@ import ProductDetail from "./pages/Products/ProductDetail"
 import AddProduct from "./pages/Products/AddProduct"
 import { ProductList } from "pages/Products/ProductList"
 import { OrderFunnel } from "pages/Order/OrderFunnel"
-import { Receipt } from "lucide-react"
+import { ReceiptPage } from "pages/Order/ReceiptPage"
+
 
 function App() {
 
@@ -28,8 +29,7 @@ function App() {
           <Route path="/edit/:id" element={<AddProduct />} />
           <Route path="/cart" element={<OrderFunnel />} />
           <Route path="/payment" element={<OrderFunnel />} />
-          <Route path="/receipt" element={<Receipt />} />
-          <Route path="/receipt:id" element={<Receipt />} />
+          <Route path="/receipt/:id" element={<ReceiptPage />} />
         </Route>
       </Routes>
     </>
