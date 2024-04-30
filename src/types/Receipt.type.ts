@@ -6,4 +6,5 @@ export interface Receipt {
   products: CartProduct[];
   price: number;
   message: string;
+  receiver: string;
 }
