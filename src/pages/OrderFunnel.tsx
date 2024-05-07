@@ -1,9 +1,9 @@
 import { CartProduct } from "@/types"
 import { useState } from 'react'
 import CartPage from "./CartPage";
-import { PaymentPage } from "./PaymentPage";
+import PaymentPage from "./PaymentPage";
 
-export const OrderFunnel = () => {
+const OrderFunnel = () => {
 
   const [buyProducts, setBuyProducts] = useState<CartProduct[]>([]);
   const [step, setStep] = useState<"장바구니" | "결제페이지">("장바구니");
@@ -22,3 +22,5 @@ export const OrderFunnel = () => {
     </>
   )
 }
+
+export default OrderFunnel;

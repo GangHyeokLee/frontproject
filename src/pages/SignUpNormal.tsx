@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom"
-import GoogleIcon from '../../assets/google.png';
+import GoogleIcon from '../assets/google.png';
 import { USER_COLLECTION, auth } from "@/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";

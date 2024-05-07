@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 
 export const Image = ({ imageUrl, className }: { imageUrl: string; className: string }) => {
   return (
@@ -26,8 +26,7 @@ const Category = ({ category }: { category: string }) => {
   )
 }
 
-interface CardProps {
-  children: ReactNode;
+interface CardProps extends PropsWithChildren {
   onClick: () => void;
 }
 

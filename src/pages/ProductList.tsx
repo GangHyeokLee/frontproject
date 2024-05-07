@@ -3,7 +3,7 @@ import { useFilterProducts } from "@/hooks/useFilterProducts";
 import { ProductItems } from "component/MainPage/ProductItems";
 import { CategoryList } from "component/MainPage/CategoryList";
 
-export const ProductList = () => {
+const ProductList = () => {
 
   const [filter, setFilter] = useState("ALL");
   const products = useFilterProducts(filter);
@@ -15,3 +15,5 @@ export const ProductList = () => {
     </>
   )
 }
+
+export default ProductList

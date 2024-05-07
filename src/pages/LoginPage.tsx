@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { Ask, AuthForm, DivideLine, SocialLogin, Button, Title } from "component/Auth";
 import { FieldValues, useForm } from "react-hook-form";
-import GoogleIcon from '../../assets/google.png';
+import GoogleIcon from '../assets/google.png';
 import { handleGoogleLogin } from "@/api/auth/handleGoogleLogin";
 
 const LoginPage = () => {

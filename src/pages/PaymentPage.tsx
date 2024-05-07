@@ -12,7 +12,7 @@ interface PaymentPageProps {
   onPrev: () => void;
 }
 
-export const PaymentPage = ({ buyProducts, setBuyProducts, onPrev }: PaymentPageProps) => {
+const PaymentPage = ({ buyProducts, setBuyProducts, onPrev }: PaymentPageProps) => {
 
   const navigate = useNavigate();
   const [orderMessage, setOrderMessage] = useState("");
@@ -52,3 +52,5 @@ export const PaymentPage = ({ buyProducts, setBuyProducts, onPrev }: PaymentPage
     </div>
   )
 }
+
+export default PaymentPage;

@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const OAuthInfo = () => {
+const OAuthInfo = () => {
   return (
     <div>OAuthInfo</div>
   )
 }
+
+export default OAuthInfo;

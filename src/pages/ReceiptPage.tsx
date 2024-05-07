@@ -4,7 +4,7 @@ import { Button } from "component/Auth";
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 
-export const ReceiptPage = () => {
+const ReceiptPage = () => {
   // 주문 결과 받는 로직있을 것
   // 얘는 요구사항 변경될 거 같지 않으니 그냥 여기서 받고 다 하자
   const id = useParams().id;
@@ -56,4 +56,6 @@ export const ReceiptPage = () => {
       </div>
     </div>
   )
-}
+};
+
+export default ReceiptPage;
