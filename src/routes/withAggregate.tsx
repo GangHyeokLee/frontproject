@@ -45,7 +45,7 @@ export const AggregateComponent = ({ children, page }: WithAggregateProps) => {
       return <Navigate to="/" />
     }
 
-    if (page == "AddProduct" && (isSeller.current == "SELLER")) {
+    if (page == "AddProduct" && (isSeller.current != "SELLER")) {
       console.log('Not for users', page);
       return <Navigate to="/" />
     }
