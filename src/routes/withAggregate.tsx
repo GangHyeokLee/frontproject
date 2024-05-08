@@ -8,11 +8,6 @@ interface WithAggregateProps extends PropsWithChildren {
   page: keyof typeof ROUTES;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const withAggregate = ({ children, page }: WithAggregateProps) => {
-  return (<AggregateComponent children={children} page={page} />)
-}
-
 export const AggregateComponent = ({ children, page }: WithAggregateProps) => {
 
   const isSeller = useRef<string>("");
@@ -27,6 +22,7 @@ export const AggregateComponent = ({ children, page }: WithAggregateProps) => {
       }
     };
     get();
+    console.log('rendered');
   }, []);
 
   if (isLoading) {

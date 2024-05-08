@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { ROUTES } from "./route.constant"
 import { Suspense } from "react";
-import { withAggregate } from "./withAggregate";
+import { AggregateComponent } from "./withAggregate";
 import Layout from "component/layout/Layout";
 
 export const AppRoute = () => {
@@ -19,7 +19,7 @@ export const AppRoute = () => {
               path={path}
               element={
                 <Suspense fallback={<div>Loading...</div>}>
-                  {withAggregate({ children: <LazyComponent />, page: route })}
+                  <AggregateComponent children={<LazyComponent />} page={route} />
                 </Suspense>
               }
             />
