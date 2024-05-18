@@ -22,7 +22,6 @@ export const AggregateComponent = ({ children, page }: WithAggregateProps) => {
       }
     };
     get();
-    console.log('rendered');
   }, []);
 
   if (isLoading) {
@@ -30,7 +29,7 @@ export const AggregateComponent = ({ children, page }: WithAggregateProps) => {
   }
   else {
     // 로그인한 유저가 로그인, 회원가입 페이지에 접근 할 때
-    if ((page == "LoginPage" || page == "SignUpNormal" || page == "SignUpSelectPage" || page == "SignUpSeller") && (isSeller.current != "")) {
+    if ((page == "LoginPage" || page == "SignUpNormal" || page == "SignUpSelectPage" || page == "SignUpSeller") && (isSeller.current != "NOTUSER")) {
       console.log(isSeller.current);
       return <Navigate to="/" />;
     }

@@ -66,10 +66,10 @@ const CartPage = ({ setBuyProducts, onNext }: CartPageProps) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-2/4 text-center">상품명</TableHead>
-            <TableHead className="text-center w-1/4">가격</TableHead>
-            <TableHead className="w-1/4 text-center">수량</TableHead>
-            <TableHead className="text-center w-fit whitespace-nowrap">삭제</TableHead>
+            <TableHead className="w-2/4 text-center whitespace-nowrap">상품명</TableHead>
+            <TableHead className="w-1/4 text-center whitespace-nowrap">가격</TableHead>
+            <TableHead className="w-1/4 text-center whitespace-nowrap">수량</TableHead>
+            <TableHead className="w-fit text-center whitespace-nowrap">삭제</TableHead>
             <TableHead><Checkbox className="mr-5" onClick={handleAllClick} checked={headChecked} /></TableHead>
           </TableRow>
         </TableHeader>

@@ -13,8 +13,7 @@ export const getIsSeller = () => {
           reject(error);
         }
       } else {
-        // Handle the case where user is not logged in
-        reject(new Error("User is not logged in"));
+        resolve("NOTUSER");
       }
     });
   });

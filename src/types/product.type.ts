@@ -9,6 +9,7 @@ export interface Product {
   imageUrl: string;
   createdAt: Date;
   updatedAt?: Date;
+  quantity: number;
 }
 
 export interface CartProduct extends Product {
